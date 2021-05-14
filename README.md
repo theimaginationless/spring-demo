@@ -23,7 +23,7 @@
 
     + Headers
     + Body
-    
+    ```
         [
             {
                 "mqName": "general-queue",
@@ -41,23 +41,25 @@
                 "messageId": "3"
             }
         ]
+    ```
 
 ### Get messages log from postgresql [GET `/api/getLog`]
 + Request (application/json;charset=UTF-8)
 
     + Params
-            startDate: String ("20-05-2021")
-            endDate: String ("22-05-2021")
-            (Optional) messageId: Long
-            mqName: String
+            `startDate: String ("20-05-2021")`
+            `endDate: String ("22-05-2021")`
+            (Optional) `messageId: Long`
+            `mqName: String`
             
     + Body
             
 + Response 200 (application/json;charset=UTF-8)
    
-    + Headers     
+    + Headers   
+      
     + Body
-            
+    ```
         [
             {
                 "mqName": "general-queue",
@@ -75,3 +77,4 @@
                 "messageId": "3"
             }
         ]
+    ```
