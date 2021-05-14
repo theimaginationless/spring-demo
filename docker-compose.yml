@@ -38,6 +38,9 @@ services:
         logging:
             driver: json-file
         restart: always
+        depends_on: 
+            - spring-demo-db
+            - spring-demo-activemq-artemis
 
 networks:
     spring-demo-net:
