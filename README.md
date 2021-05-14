@@ -48,8 +48,11 @@
 
     + Params
             `startDate: String ("20-05-2021")`
+
             `endDate: String ("22-05-2021")`
+
             (Optional) `messageId: Long`
+            
             `mqName: String`
             
     + Body
@@ -57,7 +60,7 @@
 + Response 200 (application/json;charset=UTF-8)
    
     + Headers   
-      
+
     + Body
     ```
         [
