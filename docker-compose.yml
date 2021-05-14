@@ -1,29 +1,9 @@
 version: '3'
 services:
-    spring-demo:
-        build: 
-            context: .
-            dockerfile: Dockerfile
-        networks:
-            - spring-demo-net
-        ports:
-            - '8080:8080'
-        environment: 
-            - DB_URL=jdbc:postgresql://spring-demo-db:5432/postgres
-            - DB_USER=postgres
-            - DB_PASS=postgres_passwd4
-        depends_on:
-            - spring-demo-db
-        logging:
-            driver: json-file
-        restart: always
-    
     spring-demo-db:
         image: postgres:13
         networks:
             - spring-demo-net
-        ports:
-            - '5433:5432'
         environment: 
             - POSTGRES_PASSWORD=postgres_passwd4
         volumes: 
@@ -31,8 +11,33 @@ services:
         restart: always
 
     spring-demo-activemq-artemis:
-        image: apache/activemq-artemis
-        
+        build: 
+            context: ./docker
+            dockerfile: Dockerfile-artemis-centos
+        networks: 
+            - spring-demo-net
+        environment: 
+            - ARTEMIS_USER=artemis
+            - ARTEMIS_PASSWORD=artemis
+        volumes: 
+            - './docker/_TMP_/artemis/2.17.0:/opt/activemq-artemis'
+
+    spring-demo:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        networks:
+            - spring-demo-net
+        ports:
+            - 8080:8080
+        environment: 
+            - DB_URL=jdbc:postgresql://spring-demo-db:5432/postgres
+            - DB_USER=postgres
+            - DB_PASS=postgres_passwd4
+            - ACTIVEMQ_HOST=pring-demo-activemq-artemis
+        logging:
+            driver: json-file
+        restart: always
 
 networks:
     spring-demo-net:
