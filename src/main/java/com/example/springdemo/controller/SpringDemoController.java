@@ -1,5 +1,6 @@
 package com.example.springdemo.controller;
 
+import com.example.springdemo.dao.MessageDAO;
 import com.example.springdemo.mapper.MessageMapper;
 import com.example.springdemo.model.Message;
 import com.example.springdemo.repository.MessageRepository;
@@ -8,8 +9,6 @@ import com.example.springdemo.service.DispatchServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -27,8 +26,6 @@ public class SpringDemoController {
     private final DispatchServiceInterface dispatchService;
     private final MessageRepository messageRepository;
     private final MessageMapper messageMapper;
-    @Value("${spring.artemis.host}")
-    String test;
 
     @Autowired
     public SpringDemoController(DispatchServiceInterface dispatchService,
@@ -41,7 +38,6 @@ public class SpringDemoController {
 
     @PostMapping(value = "/sendMessage", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void sendMessage(@RequestBody List<MessageRequest> messageRequestList) {
-        System.out.println(test);
         logger.debug("Request have " + messageRequestList.size() + " messages.");
         var messageRequestsStream = messageRequestList.stream();
         var messagesStream = messageRequestsStream.map(messageMapper::requestToMessage);
@@ -50,14 +46,17 @@ public class SpringDemoController {
 
     @GetMapping(value = "/getLog")
     public ResponseEntity<List<Message>> getLog(@RequestParam(required = false) Long messageId,
-                                                @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date startDate,
-                                                @RequestParam @DateTimeFormat(pattern = "dd-MM-yyyy") Date endDate,
+                                                @RequestParam long startDateMills,
+                                                @RequestParam long endDateMills,
                                                 @RequestParam String mqName) {
+        Date startDate = new Date(startDateMills);
+        Date endDate = new Date(endDateMills);
         logger.debug("Request for messageId='" + messageId + ",\n" +
                      "startDate='" + startDate + "'\n" +
                      "endDate='" + endDate + "'\n" +
                      "mqName='" + mqName + "'.");
-        List<com.example.springdemo.DAO.Message> messagesDao;
+        System.out.println(startDate);
+        List<MessageDAO> messagesDao;
         if (messageId != null) {
             messagesDao = messageRepository.findByAll(messageId, startDate, endDate, mqName);
         }

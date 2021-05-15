@@ -1,8 +1,7 @@
-package com.example.springdemo.DAO;
+package com.example.springdemo.dao;
 
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 
 @Entity
-public class Message {
+public class MessageDAO {
     @NotEmpty
     private String messageBody;
 
