@@ -18,6 +18,7 @@ public class MessageDAO {
     private String mqName;
 
     @Id
+    @Column(unique = true)
     private Long messageId;
 
     @CreationTimestamp

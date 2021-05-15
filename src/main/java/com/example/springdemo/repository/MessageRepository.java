@@ -14,13 +14,13 @@ public interface MessageRepository extends CrudRepository<MessageDAO, Long> {
     MessageDAO findByMessageId(long messageId);
 
     @Query(value = "from MessageDAO m where m.created between :startDate and :endDate and m.mqName = :mqName and m.messageId = :messageId")
-    List<MessageDAO> findByAll(@Param("messageId") long messageId,
-                               @Param("startDate") Date startDate,
-                               @Param("endDate") Date endDate,
-                               @Param("mqName") String mqName);
+    MessageDAO findBy(@Param("messageId") long messageId,
+                            @Param("startDate") Date startDate,
+                            @Param("endDate") Date endDate,
+                            @Param("mqName") String mqName);
 
     @Query(value = "from MessageDAO m where m.created between :startDate and :endDate and m.mqName = :mqName")
-    List<MessageDAO> findByAll(@Param("startDate") Date startDate,
-                               @Param("endDate") Date endDate,
-                               @Param("mqName") String mqName);
+    List<MessageDAO> findAllBy(@Param("startDate") Date startDate,
+                            @Param("endDate") Date endDate,
+                            @Param("mqName") String mqName);
 }

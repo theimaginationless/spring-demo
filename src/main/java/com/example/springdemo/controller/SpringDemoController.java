@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,10 +59,11 @@ public class SpringDemoController {
 
         List<MessageDAO> messagesDao;
         if (messageId != null) {
-            messagesDao = messageRepository.findByAll(messageId, startDate, endDate, mqName);
+            messagesDao = new ArrayList<MessageDAO>();
+            messagesDao.add(messageRepository.findBy(messageId, startDate, endDate, mqName));
         }
         else {
-            messagesDao = messageRepository.findByAll(startDate, endDate, mqName);
+            messagesDao = messageRepository.findAllBy(startDate, endDate, mqName);
         }
 
         List<Message> messages = messagesDao.stream().map(messageMapper::daoToMessage).collect(Collectors.toList());
