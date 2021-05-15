@@ -55,7 +55,7 @@ public class SpringDemoController {
                      "startDate='" + startDate + "'\n" +
                      "endDate='" + endDate + "'\n" +
                      "mqName='" + mqName + "'.");
-        System.out.println(startDate);
+
         List<MessageDAO> messagesDao;
         if (messageId != null) {
             messagesDao = messageRepository.findByAll(messageId, startDate, endDate, mqName);
