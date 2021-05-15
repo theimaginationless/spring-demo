@@ -48,8 +48,8 @@
 
     + Params
         ```
-        startDate: String ("20-05-2021")
-        endDate: String ("22-05-2021")
+        startDate: Long (Milliseconds)
+        endDate: Long (Milliseconds)
         messageId: Long (empty messageId for all messages)
         mqName: String
         ```
