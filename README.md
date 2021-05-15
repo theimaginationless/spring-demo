@@ -50,7 +50,7 @@
         ```
         startDate: String ("20-05-2021")
         endDate: String ("22-05-2021")
-        messageId: Long (messageId=0 for all messages)
+        messageId: Long (empty messageId for all messages)
         mqName: String
         ```
 
