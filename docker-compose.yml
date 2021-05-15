@@ -34,7 +34,7 @@ services:
             - DB_URL=jdbc:postgresql://spring-demo-db:5432/postgres
             - DB_USER=postgres
             - DB_PASS=postgres_passwd4
-            - ACTIVEMQ_HOST=pring-demo-activemq-artemis
+            - ACTIVEMQ_HOST=spring-demo-activemq-artemis
         logging:
             driver: json-file
         restart: always
