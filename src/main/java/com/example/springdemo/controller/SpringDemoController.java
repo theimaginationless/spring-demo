@@ -9,6 +9,7 @@ import com.example.springdemo.service.DispatchServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -46,12 +47,12 @@ public class SpringDemoController {
     }
 
     @GetMapping(value = "/getLog")
-    public ResponseEntity<List<Message>> getLog(@RequestParam(required = false) Long messageId,
-                                                @RequestParam long startDateMills,
-                                                @RequestParam long endDateMills,
-                                                @RequestParam String mqName) {
-        Date startDate = new Date(startDateMills);
-        Date endDate = new Date(endDateMills);
+    public ResponseEntity<List<Message>> getLog(
+            @RequestParam(required = false) Long messageId,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+            @RequestParam String mqName)
+    {
         logger.debug("Request for messageId='" + messageId + ",\n" +
                      "startDate='" + startDate + "'\n" +
                      "endDate='" + endDate + "'\n" +
@@ -59,14 +60,18 @@ public class SpringDemoController {
 
         List<MessageDAO> messagesDao;
         if (messageId != null) {
-            messagesDao = new ArrayList<MessageDAO>();
+            messagesDao = new ArrayList<>();
             messagesDao.add(messageRepository.findBy(messageId, startDate, endDate, mqName));
         }
         else {
             messagesDao = messageRepository.findAllBy(startDate, endDate, mqName);
         }
 
-        List<Message> messages = messagesDao.stream().map(messageMapper::daoToMessage).collect(Collectors.toList());
+        List<Message> messages = messagesDao
+                                    .stream()
+                                    .map(messageMapper::daoToMessage)
+                                    .collect(Collectors.toList());
+
         logger.debug("Count of fetched messages: " + messages.size() + ".");
         return ResponseEntity.ok(messages);
     }
