@@ -49,8 +49,8 @@ public class SpringDemoController {
     @GetMapping(value = "/getLog")
     public ResponseEntity<List<Message>> getLog(
             @RequestParam(required = false) Long messageId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date endDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date startDate,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date endDate,
             @RequestParam String mqName)
     {
         logger.debug("Request for messageId='" + messageId + ",\n" +
