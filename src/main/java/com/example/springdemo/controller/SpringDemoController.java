@@ -41,9 +41,10 @@ public class SpringDemoController {
     @PostMapping(value = "/sendMessage", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void sendMessage(@RequestBody List<MessageRequest> messageRequestList) {
         logger.debug("Request have " + messageRequestList.size() + " messages.");
-        var messageRequestsStream = messageRequestList.stream();
-        var messagesStream = messageRequestsStream.map(messageMapper::requestToMessage);
-        messagesStream.forEach(message -> dispatchService.sendMessage(message.getMqName(), message));
+
+        messageRequestList.stream()
+                .map(messageMapper::requestToMessage)
+                .forEach(message -> dispatchService.sendMessage(message.getMqName(), message));
     }
 
     @GetMapping(value = "/getLog")
@@ -67,10 +68,9 @@ public class SpringDemoController {
             messagesDao = messageRepository.findAllBy(startDate, endDate, mqName);
         }
 
-        List<Message> messages = messagesDao
-                                    .stream()
-                                    .map(messageMapper::daoToMessage)
-                                    .collect(Collectors.toList());
+        List<Message> messages = messagesDao.stream()
+                .map(messageMapper::daoToMessage)
+                .collect(Collectors.toList());
 
         logger.debug("Count of fetched messages: " + messages.size() + ".");
         return ResponseEntity.ok(messages);

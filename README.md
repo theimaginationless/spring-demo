@@ -48,8 +48,8 @@
 
     + Params
         ```
-        startDate (ISO 8601: 2021-05-16T11:35:24+00:00)
-        endDate (ISO 8601: 2021-05-16T11:35:24+00:00)
+        startDate (ISO 8601: 2021-05-15T11:35:24.000-03:00)
+        endDate (ISO 8601: 2021-05-16T11:35:24.000-03:00)
         messageId: Long (empty messageId for all messages)
         mqName: String
         ```
